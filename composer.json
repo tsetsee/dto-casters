@@ -1,0 +1,37 @@
+{
+    "name": "tsetsee/dto-casters",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Tsetsee\\DtoCasters\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tsetsee\\DtoCasters\\Tests\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Tsetsee",
+            "email": "tsetsee.yugi@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": "^8.0",
+        "spatie/data-transfer-object": "^3.9",
+        "nesbot/carbon": "^2.62"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.11",
+        "phpstan/phpstan": "^1.8",
+        "pestphp/pest": "^1.22"
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    }
+}
