@@ -1,6 +1,6 @@
 <?php
 
-namespace Tsetsee\DtoCasters\Casters;
+namespace Tsetsee\DTO\Casters;
 
 use Carbon\Carbon;
 use DateTimeZone;

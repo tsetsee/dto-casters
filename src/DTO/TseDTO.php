@@ -1,6 +1,6 @@
 <?php
 
-namespace Tsetsee\DtoCasters\DTO;
+namespace Tsetsee\DTO\DTO;
 
 use ReflectionClass;
 use ReflectionProperty;

@@ -1,7 +1,7 @@
 <?php
 
-use Tsetsee\DtoCasters\Tests\DTO\TestDTO;
-use Tsetsee\DtoCasters\Tests\DTO\TimestampDTO;
+use Tsetsee\DTO\Tests\DTO\TestDTO;
+use Tsetsee\DTO\Tests\DTO\TimestampDTO;
 
 test('castings', function () {
     $dto = new TimestampDTO([

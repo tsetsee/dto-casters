@@ -1,9 +1,9 @@
 <?php
 
-namespace Tsetsee\DtoCasters\Tests\DTO;
+namespace Tsetsee\DTO\Tests\DTO;
 
 use Spatie\DataTransferObject\Attributes\MapTo;
-use Tsetsee\DtoCasters\DTO\TseDTO;
+use Tsetsee\DTO\DTO\TseDTO;
 
 class TestDTO extends TseDTO
 {

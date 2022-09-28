@@ -1,11 +1,11 @@
 <?php
 
-namespace Tsetsee\DtoCasters\Tests\DTO;
+namespace Tsetsee\DTO\Tests\DTO;
 
 use Carbon\Carbon;
 use Spatie\DataTransferObject\Attributes\CastWith;
 use Spatie\DataTransferObject\DataTransferObject;
-use Tsetsee\DtoCasters\Casters\CarbonCaster;
+use Tsetsee\DTO\Casters\CarbonCaster;
 
 class TimestampDTO extends DataTransferObject
 {

@@ -4,12 +4,12 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Tsetsee\\DtoCasters\\": "src/"
+            "Tsetsee\\DTO\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Tsetsee\\DtoCasters\\Tests\\": "tests/"
+            "Tsetsee\\DTO\\Tests\\": "tests/"
         }
     },
     "authors": [
