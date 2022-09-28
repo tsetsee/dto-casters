@@ -1,5 +1,5 @@
 {
-    "name": "tsetsee/dto-casters",
+    "name": "tsetsee/php-dto",
     "type": "library",
     "license": "MIT",
     "autoload": {
