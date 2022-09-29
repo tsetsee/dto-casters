@@ -3,6 +3,7 @@
 namespace Tsetsee\DTO\Casters;
 
 use Carbon\Carbon;
+use Carbon\CarbonImmutable;
 use DateTimeZone;
 use Spatie\DataTransferObject\Caster;
 
@@ -11,12 +12,10 @@ class CarbonCaster implements Caster
     /**
      * @param array<mixed>             $types
      * @param string|DateTimeZone|null $tz
-     *
-     * @phpstan-ignore-next-line
      */
     public function __construct(
-        array $types,
-        public string $type,
+        private array $types,
+        public string $type = 'default',
         public string $format = 'Y-m-d H:i:s',
         public $tz = null,
     ) {
@@ -27,10 +26,16 @@ class CarbonCaster implements Caster
      */
     public function cast(mixed $value): mixed
     {
-        if ('timestamp' === $this->type) {
-            return Carbon::createFromTimestamp(intval($value));
+        if (in_array(CarbonImmutable::class, $this->types)) {
+            $class = CarbonImmutable::class;
+        } else {
+            $class = Carbon::class;
         }
 
-        return Carbon::createFromFormat($this->format, strval($value));
+        if ('timestamp' === $this->type) {
+            return $class::createFromTimestamp(intval($value));
+        }
+
+        return $class::createFromFormat($this->format, strval($value));
     }
 }
