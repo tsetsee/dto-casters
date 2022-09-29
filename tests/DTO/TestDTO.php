@@ -26,4 +26,7 @@ class TestDTO extends TseDTO
 
     #[CastWith(CarbonCaster::class, format: 'Y-m-d H:i:s')]
     public ?CarbonImmutable $date = null;
+
+    #[CastWith(CarbonCaster::class, format: 'c')]
+    public CarbonImmutable $dateISO;
 }
