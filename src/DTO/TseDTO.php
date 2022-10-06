@@ -14,6 +14,10 @@ class TseDTO extends DataTransferObject
      */
     public function __construct(array $args)
     {
+        if (is_array($args[0] ?? null)) {
+            $args = $args[0];
+        }
+
         parent::__construct($args);
 
         $class = new ReflectionClass(static::class);
