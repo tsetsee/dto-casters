@@ -12,7 +12,7 @@ class TseDTO extends DataTransferObject
     /**
      * @param array<string|mixed>|array<mixed> $args
      */
-    public function __construct(array $args)
+    public function __construct(...$args)
     {
         if (is_array($args[0] ?? null)) {
             $args = $args[0];
