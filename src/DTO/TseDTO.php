@@ -7,12 +7,12 @@ use ReflectionProperty;
 use Spatie\DataTransferObject\Attributes\MapTo;
 use Spatie\DataTransferObject\DataTransferObject;
 
-class TseDTO extends DataTransferObject
+abstract class TseDTO extends DataTransferObject
 {
     /**
      * @param array<string|mixed>|array<mixed> $args
      */
-    public function __construct(...$args)
+    final public function __construct(...$args)
     {
         if (is_array($args[0] ?? null)) {
             $args = $args[0];
@@ -40,5 +40,21 @@ class TseDTO extends DataTransferObject
                 $this->onlyKeys[] = $data[$name];
             }
         }
+    }
+
+    /**
+     * @param array<mixed> $data
+     *
+     * @return array<static>
+     */
+    public static function fromArray(array $data): array
+    {
+        $result = [];
+
+        foreach ($data as $item) {
+            $result[] = new static($item);
+        }
+
+        return $result;
     }
 }
