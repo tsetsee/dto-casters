@@ -2,59 +2,72 @@
 
 namespace Tsetsee\DTO\DTO;
 
-use ReflectionClass;
-use ReflectionProperty;
-use Spatie\DataTransferObject\Attributes\MapTo;
-use Spatie\DataTransferObject\DataTransferObject;
+use Doctrine\Common\Annotations\AnnotationReader;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Encoder\XmlEncoder;
+use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
+use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 
-abstract class TseDTO extends DataTransferObject
+abstract class TseDTO
 {
     /**
-     * @param array<string|mixed>|array<mixed> $args
+     * @return mixed
      */
-    final public function __construct(...$args)
+    public function toArray()
     {
-        if (is_array($args[0] ?? null)) {
-            $args = $args[0];
+        return $this::getObjectNormalizer()->normalize($this);
+    }
+
+    /**
+     * @param mixed  $payload
+     * @param string $source
+     */
+    public static function from($payload, $source = 'array'): static
+    {
+        if ('array' === $source) {
+            $objectNormalizer = static::getObjectNormalizer();
+            /** @var static $object */
+            $object = $objectNormalizer->denormalize($payload, static::class);
+        } else {
+            $serializer = self::getSerializer();
+            /** @var static $object */
+            $object = $serializer->deserialize($payload, static::class, $source);
         }
 
-        parent::__construct($args);
-
-        $class = new ReflectionClass(static::class);
-        $properties = $class->getProperties(ReflectionProperty::IS_PUBLIC);
-
-        $data = [];
-        foreach ($properties as $property) {
-            if ($property->isStatic()) {
-                continue;
-            }
-
-            $mapToAttribute = $property->getAttributes(MapTo::class);
-            $name = count($mapToAttribute) ? $mapToAttribute[0]->newInstance()->name : $property->getName();
-
-            $data[$property->getName()] = $name;
-        }
-
-        foreach (array_keys($args) as $name) {
-            if (isset($data[$name])) {
-                $this->onlyKeys[] = $data[$name];
-            }
-        }
+        return $object;
     }
 
     /**
      * @param array<mixed> $data
      *
-     * @return array<static>
+     * @return array<TseDTO>
      */
     public static function fromArray(array $data): array
     {
         $result = [];
 
         foreach ($data as $item) {
-            $result[] = new static($item);
+            $result[] = self::from($item);
         }
 
         return $result;
+    }
+
+    protected static function getSerializer(): Serializer
+    {
+        $encoders = [new XmlEncoder(), new JsonEncoder()];
+        $normalizers = [static::getObjectNormalizer()];
+
+        return new Serializer($normalizers, $encoders);
+    }
+
+    protected static function getObjectNormalizer(): ObjectNormalizer
+    {
+        $loader = new AnnotationLoader(new AnnotationReader());
+        $classMetadataFactory = new ClassMetadataFactory($loader);
+
+        return new ObjectNormalizer($classMetadataFactory);
     }
 }
