@@ -7,13 +7,17 @@ test('main test', function () {
     // $dto = new TestDTO(name: 'Test Test');
     $dto = TestDTO::from([
         'name' => 'Test Test',
-        'registerNumber' => 'УУ12234456',
+        'register_id' => 'УУ12234456',
         // 'age' => null,
         // 'dateFromTimestamp' => 1664094320,
-        // 'date' => '2020-10-19 16:12:25',
+        'date' => '2020-10-19 16:12:25',
         // 'dateISO' => '2022-09-29T05:17:11Z',
         // 'dateNull' => null,
     ]);
+
+    var_dump($dto);
+
+    var_dump('------------');
 
     $arr = $dto->toArray();
 

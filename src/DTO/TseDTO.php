@@ -9,6 +9,8 @@ use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
 use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
+use Tsetsee\DTO\Serializer\AttributeNameConverter;
+use Tsetsee\DTO\Serializer\Normalizer\CarbonNormalizer;
 
 abstract class TseDTO
 {
@@ -17,7 +19,7 @@ abstract class TseDTO
      */
     public function toArray()
     {
-        return $this::getObjectNormalizer()->normalize($this);
+        return static::getSerializer()->normalize($this);
     }
 
     /**
@@ -30,12 +32,11 @@ abstract class TseDTO
         $source = 'array',
         ?array $groups = null
     ): static {
+        $serializer = self::getSerializer();
         if ('array' === $source) {
-            $objectNormalizer = static::getObjectNormalizer();
             /** @var static $object */
-            $object = $objectNormalizer->denormalize($payload, static::class);
+            $object = $serializer->denormalize($payload, static::class);
         } else {
-            $serializer = self::getSerializer();
             /** @var static $object */
             $object = $serializer->deserialize($payload, static::class, $source);
         }
@@ -63,7 +64,7 @@ abstract class TseDTO
     protected static function getSerializer(): Serializer
     {
         $encoders = [new XmlEncoder(), new JsonEncoder()];
-        $normalizers = [static::getObjectNormalizer()];
+        $normalizers = [new CarbonNormalizer(), static::getObjectNormalizer()];
 
         return new Serializer($normalizers, $encoders);
     }
@@ -73,6 +74,8 @@ abstract class TseDTO
         $loader = new AnnotationLoader(new AnnotationReader());
         $classMetadataFactory = new ClassMetadataFactory($loader);
 
-        return new ObjectNormalizer($classMetadataFactory);
+        $nameConverter = new AttributeNameConverter();
+
+        return new ObjectNormalizer($classMetadataFactory, $nameConverter);
     }
 }
