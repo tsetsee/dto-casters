@@ -4,14 +4,13 @@ namespace Tsetsee\DTO\Casters;
 
 use Carbon\Carbon;
 use Carbon\CarbonImmutable;
-use DateTimeZone;
 use Spatie\DataTransferObject\Caster;
 
 class CarbonCaster implements Caster
 {
     /**
-     * @param array<mixed>             $types
-     * @param string|DateTimeZone|null $tz
+     * @param array<mixed>              $types
+     * @param string|\DateTimeZone|null $tz
      */
     public function __construct(
         private array $types,

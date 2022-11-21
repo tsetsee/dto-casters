@@ -5,18 +5,14 @@ use Tsetsee\DTO\Tests\DTO\TestDTO;
 
 test('main test', function () {
     // $dto = new TestDTO(name: 'Test Test');
-    // $dto = new TestDTO([
-    //     'name' => 'Test Test',
-    //     // 'registerNumber' => 'УУ12234456',
-    //     // 'age' => null,
-    //     // 'dateFromTimestamp' => 1664094320,
-    //     // 'date' => '2020-10-19 16:12:25',
-    //     // 'dateISO' => '2022-09-29T05:17:11Z',
-    //     // 'dateNull' => null,
-    // ]);
-    //
     $dto = TestDTO::from([
         'name' => 'Test Test',
+        'registerNumber' => 'УУ12234456',
+        // 'age' => null,
+        // 'dateFromTimestamp' => 1664094320,
+        // 'date' => '2020-10-19 16:12:25',
+        // 'dateISO' => '2022-09-29T05:17:11Z',
+        // 'dateNull' => null,
     ]);
 
     $arr = $dto->toArray();
@@ -25,7 +21,7 @@ test('main test', function () {
 
     expect($arr)->toMatchArray([
         'name' => 'Test Test',
-        // 'register_number' => 'УУ12234456',
+        'register_number' => 'УУ12234456',
         // 'age' => null,
     ]);
 

@@ -21,11 +21,15 @@ abstract class TseDTO
     }
 
     /**
-     * @param mixed  $payload
-     * @param string $source
+     * @param mixed          $payload
+     * @param string         $source
+     * @param ?array<string> $groups
      */
-    public static function from($payload, $source = 'array'): static
-    {
+    public static function from(
+        $payload,
+        $source = 'array',
+        ?array $groups = null
+    ): static {
         if ('array' === $source) {
             $objectNormalizer = static::getObjectNormalizer();
             /** @var static $object */
@@ -40,16 +44,17 @@ abstract class TseDTO
     }
 
     /**
-     * @param array<mixed> $data
+     * @param array<mixed>   $data
+     * @param ?array<string> $groups
      *
      * @return array<TseDTO>
      */
-    public static function fromArray(array $data): array
+    public static function fromArray(array $data, ?array $groups = null): array
     {
         $result = [];
 
         foreach ($data as $item) {
-            $result[] = self::from($item);
+            $result[] = self::from($item, 'array', $groups);
         }
 
         return $result;
