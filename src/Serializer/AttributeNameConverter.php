@@ -20,6 +20,11 @@ class AttributeNameConverter implements AdvancedNameConverterInterface
     ): string {
         if (null !== $className) {
             $reflectionClass = new \ReflectionClass($className);
+
+            if (!$reflectionClass->hasProperty($propertyName)) {
+                return $propertyName;
+            }
+
             $reflectionProperty = $reflectionClass->getProperty($propertyName);
             $attributes = $reflectionProperty->getAttributes(MapTo::class);
 

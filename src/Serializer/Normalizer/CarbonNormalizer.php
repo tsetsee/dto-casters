@@ -6,7 +6,6 @@ use Carbon\Carbon;
 use Carbon\CarbonImmutable;
 use Carbon\CarbonInterface;
 use Carbon\CarbonTimeZone;
-use InvalidArgumentException;
 use Symfony\Component\Serializer\Exception\NotNormalizableValueException;
 use Symfony\Component\Serializer\Normalizer\CacheableSupportsMethodInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
@@ -24,9 +23,12 @@ class CarbonNormalizer implements NormalizerInterface, DenormalizerInterface, Ca
     ];
 
     private const SUPPORTED_TYPES = [
-       CarbonInterface::class => true,
-       CarbonImmutable::class => true,
-       Carbon::class => true,
+        \DateTimeInterface::class => true,
+        \DateTimeImmutable::class => true,
+        \DateTime::class => true,
+        CarbonInterface::class => true,
+        CarbonImmutable::class => true,
+        Carbon::class => true,
     ];
 
     /**
@@ -44,12 +46,12 @@ class CarbonNormalizer implements NormalizerInterface, DenormalizerInterface, Ca
      *
      * @return string
      *
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public function normalize($object, string $format = null, array $context = [])
     {
         if (!$object instanceof CarbonInterface) {
-            throw new InvalidArgumentException('The object must implement the "CarbonInterface".');
+            throw new \InvalidArgumentException('The object must implement the "CarbonInterface".');
         }
 
         /** @var string $dateTimeFormat */
