@@ -18,14 +18,11 @@ class CarbonNormalizer implements NormalizerInterface, DenormalizerInterface, Ca
 
     /** @var array<string, mixed> */
     private $defaultContext = [
-        self::FORMAT_KEY => CarbonInterface::RFC3339_EXTENDED,
+        self::FORMAT_KEY => CarbonInterface::RFC3339,
         self::TIMEZONE_KEY => null,
     ];
 
     private const SUPPORTED_TYPES = [
-        \DateTimeInterface::class => true,
-        \DateTimeImmutable::class => true,
-        \DateTime::class => true,
         CarbonInterface::class => true,
         CarbonImmutable::class => true,
         Carbon::class => true,
@@ -44,7 +41,7 @@ class CarbonNormalizer implements NormalizerInterface, DenormalizerInterface, Ca
      *
      * @param array<string, mixed> $context
      *
-     * @return string
+     * @return string|int
      *
      * @throws \InvalidArgumentException
      */
@@ -62,6 +59,13 @@ class CarbonNormalizer implements NormalizerInterface, DenormalizerInterface, Ca
         if (null !== $timezone) {
             $object = clone $object;
             $object = $object->setTimezone($timezone);
+        }
+
+        switch ($dateTimeFormat) {
+            case 'x':
+                return $object->getTimestampMs();
+            case 'X':
+                return $object->getTimestamp();
         }
 
         return $object->format($dateTimeFormat);
@@ -94,12 +98,25 @@ class CarbonNormalizer implements NormalizerInterface, DenormalizerInterface, Ca
 
         $timezone = $this->getTimezone($context);
 
+        if (is_int($data)) {
+            $data = strval($data);
+        }
+
         if (null === $data || !is_string($data) || '' === trim($data)) {
             throw new NotNormalizableValueException('The data is either an empty string or null, you should pass a string that can be parsed with the passed format or a valid DateTime string.');
         }
 
         if (null !== $dateTimeFormat) {
-            $object = Carbon::class === $type ? Carbon::createFromFormat($dateTimeFormat, $data, $timezone) : CarbonImmutable::createFromFormat($dateTimeFormat, $data, $timezone);
+            switch ($dateTimeFormat) {
+                case 'X':
+                    $object = Carbon::class === $type ? Carbon::createFromTimestamp($data, $timezone) : CarbonImmutable::createFromTimestamp($data, $timezone);
+                    break;
+                case 'x':
+                    $object = Carbon::class === $type ? Carbon::createFromTimestampMs($data, $timezone) : CarbonImmutable::createFromTimestampMs($data, $timezone);
+                    break;
+                default:
+                    $object = Carbon::class === $type ? Carbon::createFromFormat($dateTimeFormat, $data, $timezone) : CarbonImmutable::createFromFormat($dateTimeFormat, $data, $timezone);
+            }
 
             if (false !== $object) {
                 return $object;

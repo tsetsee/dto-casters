@@ -9,6 +9,7 @@ use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
 use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
 use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
+use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 use Tsetsee\DTO\Serializer\AttributeNameConverter;
@@ -66,19 +67,24 @@ abstract class TseDTO
     protected static function getSerializer(): Serializer
     {
         $encoders = [new JsonEncoder(), new XmlEncoder()];
-        $normalizers = [new CarbonNormalizer(), static::getObjectNormalizer(), new ArrayDenormalizer()];
+        $normalizers = [
+            new CarbonNormalizer(),
+            new DateTimeNormalizer(),
+            new ArrayDenormalizer(),
+            static::getObjectNormalizer(),
+        ];
 
         return new Serializer($normalizers, $encoders);
     }
 
     protected static function getObjectNormalizer(): ObjectNormalizer
     {
-        // $loader = new AnnotationLoader(new AnnotationReader());
-        // $classMetadataFactory = new ClassMetadataFactory($loader);
+        $loader = new AnnotationLoader(new AnnotationReader());
+        $classMetadataFactory = new ClassMetadataFactory($loader);
 
         $nameConverter = new AttributeNameConverter();
 
-        // return new ObjectNormalizer($classMetadataFactory, $nameConverter, null, new ReflectionExtractor());
-        return new ObjectNormalizer(null, $nameConverter, null, new ReflectionExtractor());
+        return new ObjectNormalizer($classMetadataFactory, $nameConverter, null, new ReflectionExtractor());
+        // return new ObjectNormalizer(null, $nameConverter, null, new ReflectionExtractor());
     }
 }
