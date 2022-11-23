@@ -3,33 +3,39 @@
 namespace Tsetsee\DTO\Tests\DTO;
 
 use Carbon\Carbon;
-use Carbon\CarbonImmutable;
-use Spatie\DataTransferObject\Attributes\CastWith;
-use Spatie\DataTransferObject\Attributes\MapTo;
-use Tsetsee\DTO\Casters\CarbonCaster;
+use Symfony\Component\Serializer\Annotation\Context;
+use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
+use Tsetsee\DTO\Attributes\MapFrom;
+use Tsetsee\DTO\Attributes\MapTo;
 use Tsetsee\DTO\DTO\TseDTO;
+use Tsetsee\DTO\Serializer\Normalizer\CarbonNormalizer;
 
 class TestDTO extends TseDTO
 {
+    public int $age;
     public string $name;
 
+    #[MapFrom('register_id')]
     #[MapTo('register_number')]
     public string $registerNumber;
 
-    #[MapTo('customer_address')]
-    public ?string $customerAddress = null;
+    #[Context(
+        normalizationContext: [
+            DateTimeNormalizer::FORMAT_KEY => 'c',
+        ],
+        denormalizationContext: [
+            DateTimeNormalizer::FORMAT_KEY => 'm-d-Y H:i:s',
+        ],
+    )]
+    public ?\DateTimeImmutable $date = null;
 
-    public ?int $age = null;
+    #[Context(
+        denormalizationContext: [
+            CarbonNormalizer::FORMAT_KEY => 'X',
+        ],
+    )]
+    public ?Carbon $dateFromTimestamp = null;
+    public ?Carbon $dateNull = null;
 
-    #[CastWith(CarbonCaster::class, type: 'timestamp')]
-    public Carbon $dateFromTimestamp;
-
-    #[CastWith(CarbonCaster::class, format: 'Y-m-d H:i:s')]
-    public ?CarbonImmutable $date = null;
-
-    #[CastWith(CarbonCaster::class, format: 'c')]
-    public CarbonImmutable $dateISO;
-
-    #[CastWith(CarbonCaster::class, format: 'c')]
-    public ?CarbonImmutable $dateNull = null;
+    public ChildDTO $child;
 }
