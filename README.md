@@ -2,12 +2,10 @@
 
 PHP Data Transfer Object Library
 
-Getting starts
-------------------
+## Getting starts
 You should extend your class by `TseDTO`.
 
-Features
---------------------
+## Features
 1. `toArray()` method only based on the initialized array data.
 
 ```php
@@ -53,8 +51,7 @@ array() {
 
 ```
 
-Handling DateTime
-----------------------
+## Handling DateTime
 1. `php-dto` supports symfony's `DateTimeNormalizer` which handles `\DateTimeInterface`,`\DateTimeImmutable`, `\DateTime`. [@see](https://symfony.com/doc/current/serializer.html#serializer-context). By default, it uses the [RFC3339](https://tools.ietf.org/html/rfc3339#section-5.8) format.
 
 2. `php-dto` supports [Carbon](https://carbon.nesbot.com/). By default, it uses the [RFC3339](https://tools.ietf.org/html/rfc3339#section-5.8) format.
@@ -107,5 +104,33 @@ class TestDTO extends TseDTO
         ],
     )]
     public ?Carbon $dateFromTimestamp = null;
+}
+```
+
+## Casting Array
+
+You should add `adder method` if the property is an array of DTO.
+
+```php
+<?php
+
+namespace Tsetsee\DTO\Tests\DTO;
+
+use Carbon\Carbon;
+use Tsetsee\DTO\DTO\TseDTO;
+use Symfony\Component\Serializer\Annotation\Context;
+use Tsetsee\DTO\Serializer\Normalizer\CarbonNormalizer;
+
+class TestDTO extends TseDTO
+{
+    /**
+     * @var array<ChildDTO>
+     */
+    public array $children = [];
+
+    public function addChildren(ChildDTO $children): void
+    {
+        $this->children[] = $children;
+    }
 }
 ```

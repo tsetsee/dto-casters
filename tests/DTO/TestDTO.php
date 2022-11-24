@@ -38,4 +38,14 @@ class TestDTO extends TseDTO
     public ?Carbon $dateNull = null;
 
     public ChildDTO $child;
+
+    /**
+     * @var array<ChildDTO>
+     */
+    public array $children = [];
+
+    public function addChildren(ChildDTO $child): void
+    {
+        $this->children[] = $child;
+    }
 }
