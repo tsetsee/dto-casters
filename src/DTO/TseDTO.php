@@ -26,22 +26,26 @@ abstract class TseDTO
     }
 
     /**
-     * @param mixed          $payload
-     * @param string         $source
-     * @param ?array<string> $groups
+     * @param mixed         $payload
+     * @param string        $source
+     * @param array<string> $groups
      */
     public static function from(
         $payload,
         $source = 'array',
-        ?array $groups = null
+        array $groups = ['*'],
     ): static {
         $serializer = self::getSerializer();
         if ('array' === $source) {
             /** @var static $object */
-            $object = $serializer->denormalize($payload, static::class);
+            $object = $serializer->denormalize($payload, static::class, null, [
+                'groups' => $groups,
+            ]);
         } else {
             /** @var static $object */
-            $object = $serializer->deserialize($payload, static::class, $source);
+            $object = $serializer->deserialize($payload, static::class, $source, [
+                'groups' => $groups,
+            ]);
         }
 
         return $object;
