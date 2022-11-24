@@ -5,6 +5,12 @@ PHP Data Transfer Object Library
 ## Getting starts
 You should extend your class by `TseDTO`.
 
+## Installation
+
+```bash
+$ composer require tsetsee/php-dto
+```
+
 ## Features
 1. `toArray()` method only based on the initialized array data.
 
