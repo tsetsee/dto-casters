@@ -37,7 +37,6 @@ test('main test', function () {
                 'title' => 'haha 3',
                 'createdAt' => '2022-09-29T05:17:11Z',
                 'notneeded' => 'asdf',
-                'status' => 'rejected',
             ],
         ],
         'dateNull' => null,
@@ -90,7 +89,7 @@ test('main test', function () {
                     'id' => 7,
                     'name' => 'haha 3',
                     'createdAt' => '2022-09-29 05:17:11',
-                    'status' => 'rejected',
+                    'status' => 'pending',
                 ],
             ],
         ])
