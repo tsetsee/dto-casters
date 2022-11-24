@@ -52,12 +52,12 @@ abstract class TseDTO
     }
 
     /**
-     * @param array<mixed>   $data
-     * @param ?array<string> $groups
+     * @param array<mixed>  $data
+     * @param array<string> $groups
      *
      * @return array<TseDTO>
      */
-    public static function fromArray(array $data, ?array $groups = null): array
+    public static function fromArray(array $data, array $groups = ['*']): array
     {
         $result = [];
 
