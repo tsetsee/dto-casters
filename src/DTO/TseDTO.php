@@ -14,6 +14,7 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 use Tsetsee\DTO\Serializer\AttributeNameConverter;
 use Tsetsee\DTO\Serializer\Normalizer\CarbonNormalizer;
+use Tsetsee\DTO\Serializer\Normalizer\EnumNormalizer;
 
 abstract class TseDTO
 {
@@ -74,6 +75,7 @@ abstract class TseDTO
         $normalizers = [
             new CarbonNormalizer(),
             new DateTimeNormalizer(),
+            new EnumNormalizer(),
             new ArrayDenormalizer(),
             static::getObjectNormalizer(),
         ];
