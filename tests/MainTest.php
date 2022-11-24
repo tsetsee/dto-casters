@@ -71,22 +71,26 @@ test('main test', function () {
                 'id' => 5,
                 'name' => 'haha',
                 'createdAt' => '2022-09-29 05:17:11',
+                'status' => 'accepted',
             ],
             'children' => [
                 [
                     'id' => 5,
                     'name' => 'haha',
                     'createdAt' => '2022-09-29 05:17:11',
+                    'status' => 'accepted',
                 ],
                 [
                     'id' => 6,
                     'name' => 'haha 2',
                     'createdAt' => '2022-09-29 05:17:11',
+                    'status' => 'accepted',
                 ],
                 [
                     'id' => 7,
                     'name' => 'haha 3',
                     'createdAt' => '2022-09-29 05:17:11',
+                    'status' => 'rejected',
                 ],
             ],
         ])

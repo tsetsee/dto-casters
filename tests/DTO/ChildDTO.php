@@ -7,6 +7,7 @@ use Symfony\Component\Serializer\Annotation\Context;
 use Tsetsee\DTO\Attributes\MapTo;
 use Tsetsee\DTO\DTO\TseDTO;
 use Tsetsee\DTO\Serializer\Normalizer\CarbonNormalizer;
+use Tsetsee\DTO\Tests\Enum\Status;
 
 class ChildDTO extends TseDTO
 {
@@ -16,4 +17,6 @@ class ChildDTO extends TseDTO
 
     #[Context(normalizationContext: [CarbonNormalizer::FORMAT_KEY => 'Y-m-d H:i:s'])]
     public CarbonImmutable $createdAt;
+
+    public Status $status = Status::PENDING;
 }
