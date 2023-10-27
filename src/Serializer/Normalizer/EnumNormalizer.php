@@ -10,8 +10,6 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 class EnumNormalizer implements NormalizerInterface, DenormalizerInterface, CacheableSupportsMethodInterface
 {
     /**
-     * {@inheritdoc}
-     *
      * @param array<string, mixed> $context
      *
      * @return string|int
@@ -27,17 +25,12 @@ class EnumNormalizer implements NormalizerInterface, DenormalizerInterface, Cach
         return $object->value;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function supportsNormalization($data, string $format = null)
     {
         return $data instanceof \BackedEnum;
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @param array<string, mixed> $context
      *
      * @return \BackedEnum
@@ -57,17 +50,11 @@ class EnumNormalizer implements NormalizerInterface, DenormalizerInterface, Cach
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function supportsDenormalization($data, string $type, string $format = null)
     {
         return enum_exists($type);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function hasCacheableSupportsMethod(): bool
     {
         return __CLASS__ === static::class;

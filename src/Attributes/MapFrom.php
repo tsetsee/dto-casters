@@ -2,8 +2,6 @@
 
 namespace Tsetsee\DTO\Attributes;
 
-use Attribute;
-
 #[\Attribute()]
 class MapFrom
 {

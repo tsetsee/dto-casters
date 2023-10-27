@@ -2,7 +2,6 @@
 
 namespace Tsetsee\DTO\DTO;
 
-use Doctrine\Common\Annotations\AnnotationReader;
 use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
@@ -19,7 +18,7 @@ use Tsetsee\DTO\Serializer\Normalizer\EnumNormalizer;
 abstract class TseDTO
 {
     /**
-     * @return mixed
+     * @return array<string,mixed>|array<int,mixed>|string|bool|int|float|\ArrayObject<string,mixed>|\ArrayObject<int,mixed>|null
      */
     public function toArray()
     {
@@ -27,7 +26,7 @@ abstract class TseDTO
     }
 
     /**
-     * @param mixed         $payload
+     * @param string|mixed  $payload
      * @param string        $source
      * @param array<string> $groups
      */
@@ -85,7 +84,7 @@ abstract class TseDTO
 
     protected static function getObjectNormalizer(): ObjectNormalizer
     {
-        $loader = new AnnotationLoader(new AnnotationReader());
+        $loader = new AnnotationLoader();
         $classMetadataFactory = new ClassMetadataFactory($loader);
 
         $nameConverter = new AttributeNameConverter();

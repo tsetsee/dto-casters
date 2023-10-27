@@ -37,8 +37,6 @@ class CarbonNormalizer implements NormalizerInterface, DenormalizerInterface, Ca
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @param array<string, mixed> $context
      *
      * @return string|int
@@ -71,17 +69,12 @@ class CarbonNormalizer implements NormalizerInterface, DenormalizerInterface, Ca
         return $object->format($dateTimeFormat);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function supportsNormalization($data, string $format = null)
     {
         return $data instanceof CarbonInterface;
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @param array<string, mixed> $context
      *
      * @return CarbonInterface
@@ -134,17 +127,11 @@ class CarbonNormalizer implements NormalizerInterface, DenormalizerInterface, Ca
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function supportsDenormalization($data, string $type, string $format = null)
     {
         return isset(self::SUPPORTED_TYPES[$type]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function hasCacheableSupportsMethod(): bool
     {
         return __CLASS__ === static::class;
@@ -180,5 +167,13 @@ class CarbonNormalizer implements NormalizerInterface, DenormalizerInterface, Ca
         }
 
         return $dateTimeZone instanceof CarbonTimeZone ? $dateTimeZone : new CarbonTimeZone($dateTimeZone);
+    }
+
+    /**
+     * @return array<class-string|'*'|'object'|string, bool|null>
+     */
+    public function getSupportedTypes(?string $format): array
+    {
+        return self::SUPPORTED_TYPES;
     }
 }
