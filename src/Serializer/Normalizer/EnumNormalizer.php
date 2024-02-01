@@ -44,6 +44,10 @@ class EnumNormalizer implements NormalizerInterface, DenormalizerInterface, Cach
         }
 
         try {
+            if (!method_exists($type, 'from')) {
+                throw new \Exception('Enum must have method "from"');
+            }
+
             return $type::from($data);
         } catch (\Exception $e) {
             throw new NotNormalizableValueException($e->getMessage(), $e->getCode(), $e);

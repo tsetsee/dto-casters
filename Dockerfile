@@ -9,6 +9,8 @@ COPY docker/php/php-cli.ini /usr/local/etc/php/php-cli.ini
 # https://getcomposer.org/doc/03-cli.md#composer-allow-superuser
 ENV COMPOSER_ALLOW_SUPERUSER=1
 RUN set -eux; \
+    apk add --no-cache libxml2-dev; \
+    docker-php-ext-install xml; \
     composer clear-cache
 ENV PATH="${PATH}:/root/.composer/vendor/bin"
 

@@ -15,6 +15,8 @@ class TestDTO extends TseDTO
     public int $age;
     public string $name;
 
+    public ?string $firstName = null;
+
     #[MapFrom('register_id')]
     #[MapTo('register_number')]
     public string $registerNumber;

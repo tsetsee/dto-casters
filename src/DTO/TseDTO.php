@@ -18,11 +18,21 @@ use Tsetsee\DTO\Serializer\Normalizer\EnumNormalizer;
 abstract class TseDTO
 {
     /**
+     * @param array<string, mixed> $context
+     *
      * @return array<string,mixed>|array<int,mixed>|string|bool|int|float|\ArrayObject<string,mixed>|\ArrayObject<int,mixed>|null
      */
-    public function toArray()
+    public function toArray(string $format = null, array $context = [])
     {
-        return static::getSerializer()->normalize($this);
+        return static::getSerializer()->normalize($this, $format, $context);
+    }
+
+    /**
+     * @param array<string, mixed> $context
+     */
+    public function serialize(string $format = 'json', array $context = []): string
+    {
+        return static::getSerializer()->serialize($this, $format, $context);
     }
 
     /**
