@@ -1,48 +1,48 @@
 {
-    "name": "tsetsee/php-dto",
-    "type": "library",
-    "license": "MIT",
-    "autoload": {
-        "psr-4": {
-            "Tsetsee\\DTO\\": "src/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Tsetsee\\DTO\\Tests\\": "tests/"
-        }
-    },
-    "authors": [
-        {
-            "name": "Tsetsee",
-            "email": "tsetsee.yugi@gmail.com"
-        }
-    ],
-    "minimum-stability": "stable",
-    "require": {
-        "php": "^8.0",
-        "nesbot/carbon": "^2.62",
-        "symfony/serializer": "^4.0 || ^5.0 || ^6.0",
-        "symfony/property-access": "^4.0 || ^5.0 || ^6.0"
-    },
-    "require-dev": {
-        "friendsofphp/php-cs-fixer": "^3.11",
-        "phpstan/phpstan": "^1.8",
-        "pestphp/pest": "^2.33.2"
-    },
-    "config": {
-        "allow-plugins": {
-            "pestphp/pest-plugin": true
-        }
-    },
-    "scripts": {
-        "phpstan": "phpstan analyze",
-        "fixer": "php-cs-fixer fix",
-        "unit-test": "pest",
-        "test": [
-            "@fixer",
-            "@phpstan",
-            "@unit-test"
-        ]
+  "name": "lodipay/php-dto",
+  "type": "library",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "Tsetsee\\DTO\\": "src/"
     }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tsetsee\\DTO\\Tests\\": "tests/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Tsetsee",
+      "email": "tsetsee.yugi@gmail.com"
+    }
+  ],
+  "minimum-stability": "stable",
+  "require": {
+    "php": "^8.0",
+    "nesbot/carbon": "^2.62",
+    "symfony/serializer": "^4.0 || ^5.0 || ^6.0",
+    "symfony/property-access": "^4.0 || ^5.0 || ^6.0"
+  },
+  "require-dev": {
+    "friendsofphp/php-cs-fixer": "^3.11",
+    "phpstan/phpstan": "^1.8",
+    "pestphp/pest": "^2.33.2"
+  },
+  "config": {
+    "allow-plugins": {
+      "pestphp/pest-plugin": true
+    }
+  },
+  "scripts": {
+    "phpstan": "phpstan analyze",
+    "fixer": "php-cs-fixer fix",
+    "unit-test": "pest",
+    "test": [
+      "@fixer",
+      "@phpstan",
+      "@unit-test"
+    ]
+  }
 }
